@@ -1,0 +1,1712 @@
+2026-04-25T13:02:10.606+05:30  INFO 8079 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Starting JavaProjectApplication using Java 21.0.10 with PID 8079 (/Users/amulya/Documents/java-project/target/classes started by amulya in /Users/amulya/Documents/java-project)
+2026-04-25T13:02:10.607+05:30  INFO 8079 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-25T13:02:11.013+05:30  INFO 8079 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T13:02:11.057+05:30  INFO 8079 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 21 JPA repository interfaces.
+2026-04-25T13:02:11.347+05:30  INFO 8079 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9090 (http)
+2026-04-25T13:02:11.363+05:30  INFO 8079 --- [family-league] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T13:02:11.363+05:30  INFO 8079 --- [family-league] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-04-25T13:02:11.389+05:30  INFO 8079 --- [family-league] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 758 ms
+2026-04-25T13:02:11.472+05:30  INFO 8079 --- [family-league] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-25T13:02:11.502+05:30  INFO 8079 --- [family-league] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-04-25T13:02:11.700+05:30  INFO 8079 --- [family-league] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T13:02:11.716+05:30  INFO 8079 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T13:02:11.775+05:30  INFO 8079 --- [family-league] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1859e55c
+2026-04-25T13:02:11.776+05:30  INFO 8079 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T13:02:11.794+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T13:02:11.807+05:30  INFO 8079 --- [family-league] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/family-league]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.3
+	Default catalog/schema: family-league/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-25T13:02:12.384+05:30  INFO 8079 --- [family-league] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T13:02:12.419+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table audit_logs (
+        id uuid not null,
+        action varchar(255) not null,
+        created_at timestamp(6) with time zone not null,
+        entity_id uuid not null,
+        entity_type varchar(255) not null,
+        ip_address varchar(255),
+        new_value jsonb,
+        old_value jsonb,
+        actor_id uuid,
+        primary key (id)
+    )
+2026-04-25T13:02:12.428+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table bulk_communication_campaigns (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        event_type varchar(255) not null,
+        message_template TEXT,
+        recipients_count integer,
+        sent_at timestamp(6) with time zone,
+        user_filter jsonb,
+        admin_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.432+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table email_logs (
+        id uuid not null,
+        body_ref varchar(255),
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        error_message varchar(255),
+        event_type varchar(255) not null,
+        scheduled_at timestamp(6) with time zone,
+        sent_at timestamp(6) with time zone,
+        status varchar(255) not null,
+        subject varchar(255),
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        campaign_id uuid,
+        user_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.436+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table leaderboard_snapshots (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        rank integer not null,
+        snapshot_at timestamp(6) with time zone not null,
+        total_points integer not null,
+        season_id uuid not null,
+        user_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.438+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table league_predictions (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        submitted_at timestamp(6) with time zone,
+        season_id uuid not null,
+        user_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.441+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table league_results (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        published_at timestamp(6) with time zone,
+        published_by uuid,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        verified_at timestamp(6) with time zone,
+        verified_by uuid,
+        first_place_team_id uuid,
+        season_id uuid not null,
+        second_place_team_id uuid,
+        third_place_team_id uuid,
+        primary key (id)
+    )
+2026-04-25T13:02:12.444+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table league_season_members (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        joined_at timestamp(6) with time zone,
+        status varchar(255) not null,
+        season_id uuid not null,
+        user_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.446+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table league_seasons (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        end_time timestamp(6) with time zone,
+        league_prediction_lock_time timestamp(6) with time zone,
+        season_name varchar(255) not null,
+        start_time timestamp(6) with time zone,
+        status varchar(255) not null,
+        league_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.450+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table league_team_predictions (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        predicted_rank integer not null,
+        league_prediction_id uuid not null,
+        team_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.452+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table league_types (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        country varchar(255),
+        description varchar(255),
+        format varchar(255),
+        gender varchar(255),
+        governing_body varchar(255),
+        is_active boolean not null,
+        name varchar(255) not null,
+        short_code varchar(255) not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.456+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table leagues (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        description varchar(255),
+        name varchar(255) not null,
+        season_year integer,
+        status varchar(255) not null,
+        league_type_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.459+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table match_predictions (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        submitted_at timestamp(6) with time zone,
+        match_id uuid not null,
+        predicted_player_of_match_id uuid,
+        predicted_toss_winner_id uuid,
+        predicted_winner_id uuid,
+        user_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.462+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table match_results (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        is_tie boolean not null,
+        published_at timestamp(6) with time zone,
+        published_by uuid,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        verified_at timestamp(6) with time zone,
+        verified_by uuid,
+        match_id uuid not null,
+        player_of_match_id uuid,
+        toss_winner_team_id uuid,
+        winning_team_id uuid,
+        primary key (id)
+    )
+2026-04-25T13:02:12.464+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table matches (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        prediction_lock_time timestamp(6) with time zone not null,
+        scheduled_at timestamp(6) with time zone not null,
+        status varchar(255) not null,
+        venue varchar(255),
+        away_team_id uuid not null,
+        home_team_id uuid not null,
+        season_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.470+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table players (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        is_active boolean not null,
+        name varchar(255) not null,
+        position varchar(255),
+        team_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.474+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table prediction_points (
+        id uuid not null,
+        calculated_at timestamp(6) with time zone not null,
+        created_at timestamp(6) with time zone not null,
+        point_type varchar(255) not null,
+        points_earned integer not null,
+        source_field varchar(255) not null,
+        league_prediction_id uuid,
+        match_id uuid,
+        match_prediction_id uuid,
+        season_id uuid not null,
+        user_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.478+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table roles (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        description varchar(255),
+        name varchar(255) not null,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        primary key (id)
+    )
+2026-04-25T13:02:12.482+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table season_teams (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        season_id uuid not null,
+        team_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.486+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table teams (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        logo_url varchar(255),
+        name varchar(255) not null,
+        short_code varchar(255) not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.490+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table user_roles (
+        id uuid not null,
+        assigned_at timestamp(6) with time zone not null,
+        assigned_by uuid,
+        deleted_at timestamp(6) with time zone,
+        is_active boolean not null,
+        role_id uuid not null,
+        user_id uuid not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.492+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    create table users (
+        id uuid not null,
+        created_at timestamp(6) with time zone not null,
+        created_by uuid,
+        deleted_at timestamp(6) with time zone,
+        updated_at timestamp(6) with time zone,
+        updated_by uuid,
+        avatar_url varchar(255),
+        email varchar(255) not null,
+        full_name varchar(255),
+        is_active boolean not null,
+        password_hash varchar(255) not null,
+        username varchar(255) not null,
+        primary key (id)
+    )
+2026-04-25T13:02:12.496+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_results 
+       drop constraint if exists UKrwfsh7dpb38ypb7klblwa9xn8
+2026-04-25T13:02:12.499+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.500+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "ukrwfsh7dpb38ypb7klblwa9xn8" of relation "league_results" does not exist, skipping
+2026-04-25T13:02:12.500+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_results 
+       add constraint UKrwfsh7dpb38ypb7klblwa9xn8 unique (season_id)
+2026-04-25T13:02:12.502+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_types 
+       drop constraint if exists UK83oyb9bd52d2sce6wrjrma93p
+2026-04-25T13:02:12.503+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.503+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "uk83oyb9bd52d2sce6wrjrma93p" of relation "league_types" does not exist, skipping
+2026-04-25T13:02:12.503+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_types 
+       add constraint UK83oyb9bd52d2sce6wrjrma93p unique (name)
+2026-04-25T13:02:12.504+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_types 
+       drop constraint if exists UK32iplf3n5fng0aatwgjx2y51f
+2026-04-25T13:02:12.505+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.505+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "uk32iplf3n5fng0aatwgjx2y51f" of relation "league_types" does not exist, skipping
+2026-04-25T13:02:12.506+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_types 
+       add constraint UK32iplf3n5fng0aatwgjx2y51f unique (short_code)
+2026-04-25T13:02:12.507+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_results 
+       drop constraint if exists UKkntkfia8geb8vqd3vvhtwimqt
+2026-04-25T13:02:12.507+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.508+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "ukkntkfia8geb8vqd3vvhtwimqt" of relation "match_results" does not exist, skipping
+2026-04-25T13:02:12.508+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_results 
+       add constraint UKkntkfia8geb8vqd3vvhtwimqt unique (match_id)
+2026-04-25T13:02:12.509+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists roles 
+       drop constraint if exists UKofx66keruapi6vyqpv6f2or37
+2026-04-25T13:02:12.509+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.509+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "ukofx66keruapi6vyqpv6f2or37" of relation "roles" does not exist, skipping
+2026-04-25T13:02:12.509+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists roles 
+       add constraint UKofx66keruapi6vyqpv6f2or37 unique (name)
+2026-04-25T13:02:12.510+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists teams 
+       drop constraint if exists UKn79qfeihdfp25t2a2kv9yjg1w
+2026-04-25T13:02:12.511+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.511+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "ukn79qfeihdfp25t2a2kv9yjg1w" of relation "teams" does not exist, skipping
+2026-04-25T13:02:12.511+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists teams 
+       add constraint UKn79qfeihdfp25t2a2kv9yjg1w unique (short_code)
+2026-04-25T13:02:12.512+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists users 
+       drop constraint if exists UK6dotkott2kjsp8vw4d0m25fb7
+2026-04-25T13:02:12.512+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.512+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "uk6dotkott2kjsp8vw4d0m25fb7" of relation "users" does not exist, skipping
+2026-04-25T13:02:12.513+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists users 
+       add constraint UK6dotkott2kjsp8vw4d0m25fb7 unique (email)
+2026-04-25T13:02:12.514+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists users 
+       drop constraint if exists UKr43af9ap4edm43mmtq01oddj6
+2026-04-25T13:02:12.514+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : HHH000247: ErrorCode: 0, SQLState: 00000
+2026-04-25T13:02:12.514+05:30  WARN 8079 --- [family-league] [main] org.hibernate.orm.jdbc.warn              : constraint "ukr43af9ap4edm43mmtq01oddj6" of relation "users" does not exist, skipping
+2026-04-25T13:02:12.514+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists users 
+       add constraint UKr43af9ap4edm43mmtq01oddj6 unique (username)
+2026-04-25T13:02:12.516+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists audit_logs 
+       add constraint FKf2uqqjmo7gvd8fq7ac81fgc0m 
+       foreign key (actor_id) 
+       references users
+2026-04-25T13:02:12.520+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists bulk_communication_campaigns 
+       add constraint FKfj38xqo33ighcyso3b67q9iys 
+       foreign key (admin_id) 
+       references users
+2026-04-25T13:02:12.521+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists email_logs 
+       add constraint FKfff9sk4qb3jgy3x0knoa7b3o5 
+       foreign key (campaign_id) 
+       references bulk_communication_campaigns
+2026-04-25T13:02:12.523+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists email_logs 
+       add constraint FK53riqu0yyo0de9vp07u9n4hbp 
+       foreign key (user_id) 
+       references users
+2026-04-25T13:02:12.524+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists leaderboard_snapshots 
+       add constraint FKdch4aeh3nkyi2qgkiwq3pu9sl 
+       foreign key (season_id) 
+       references league_seasons
+2026-04-25T13:02:12.525+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists leaderboard_snapshots 
+       add constraint FKqmx98p4ii3kvyp65wad49l8r0 
+       foreign key (user_id) 
+       references users
+2026-04-25T13:02:12.526+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_predictions 
+       add constraint FKcwq3mlenunlvtfthos6tc31gl 
+       foreign key (season_id) 
+       references league_seasons
+2026-04-25T13:02:12.527+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_predictions 
+       add constraint FK27jrey9p5yhd61qq0xpu4wegt 
+       foreign key (user_id) 
+       references users
+2026-04-25T13:02:12.528+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_results 
+       add constraint FKiidhkawcpj96m5u89c0yb2u8t 
+       foreign key (first_place_team_id) 
+       references teams
+2026-04-25T13:02:12.529+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_results 
+       add constraint FK5lo6hqocuwi0psqprvplf85qr 
+       foreign key (season_id) 
+       references league_seasons
+2026-04-25T13:02:12.531+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_results 
+       add constraint FKthvbpyyogoul3rafr1jhqkah3 
+       foreign key (second_place_team_id) 
+       references teams
+2026-04-25T13:02:12.532+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_results 
+       add constraint FKtrgphbhmri85kyc1dmbkxi2pl 
+       foreign key (third_place_team_id) 
+       references teams
+2026-04-25T13:02:12.534+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_season_members 
+       add constraint FKn2qiaiwpbwlgqmk3wot72c9nm 
+       foreign key (season_id) 
+       references league_seasons
+2026-04-25T13:02:12.535+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_season_members 
+       add constraint FKfu1fg1sc7edndn43w8ptmf6y1 
+       foreign key (user_id) 
+       references users
+2026-04-25T13:02:12.537+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_seasons 
+       add constraint FKppkr47vr5perkldk1tcmv4knn 
+       foreign key (league_id) 
+       references leagues
+2026-04-25T13:02:12.539+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_team_predictions 
+       add constraint FKtmih52lgbl2pgp348oyejcjre 
+       foreign key (league_prediction_id) 
+       references league_predictions
+2026-04-25T13:02:12.540+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists league_team_predictions 
+       add constraint FKl2y7uxi628s4csr2g8og1c4qc 
+       foreign key (team_id) 
+       references teams
+2026-04-25T13:02:12.542+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists leagues 
+       add constraint FKlha18ga6bofurdgpo8u8gm6dw 
+       foreign key (league_type_id) 
+       references league_types
+2026-04-25T13:02:12.544+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_predictions 
+       add constraint FKdtw6unubcesogykwhhrcptkvu 
+       foreign key (match_id) 
+       references matches
+2026-04-25T13:02:12.545+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_predictions 
+       add constraint FK62gmojk7m18oy8x9p1752ufs6 
+       foreign key (predicted_player_of_match_id) 
+       references players
+2026-04-25T13:02:12.546+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_predictions 
+       add constraint FKc62y2po5o27wecpsktaw4j17w 
+       foreign key (predicted_toss_winner_id) 
+       references teams
+2026-04-25T13:02:12.548+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_predictions 
+       add constraint FKov1te1omf3rcqfvupqh400kyw 
+       foreign key (predicted_winner_id) 
+       references teams
+2026-04-25T13:02:12.550+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_predictions 
+       add constraint FKgxdsuuhnhbxu46qkav8wede7i 
+       foreign key (user_id) 
+       references users
+2026-04-25T13:02:12.551+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_results 
+       add constraint FKj5awqv4fklw0tyjkhrw2fj77v 
+       foreign key (match_id) 
+       references matches
+2026-04-25T13:02:12.553+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_results 
+       add constraint FKdba41l0gaxmv8bwhu5o7r7pqt 
+       foreign key (player_of_match_id) 
+       references players
+2026-04-25T13:02:12.555+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_results 
+       add constraint FK1hyyoees13g6eme3pr1t05uic 
+       foreign key (toss_winner_team_id) 
+       references teams
+2026-04-25T13:02:12.556+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists match_results 
+       add constraint FKot0owmb8yigjly0118j8610qg 
+       foreign key (winning_team_id) 
+       references teams
+2026-04-25T13:02:12.557+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists matches 
+       add constraint FK2e8erbfecb0tjtq9iudg36bxu 
+       foreign key (away_team_id) 
+       references teams
+2026-04-25T13:02:12.558+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists matches 
+       add constraint FK8k68nekawp47js52dq8720voe 
+       foreign key (home_team_id) 
+       references teams
+2026-04-25T13:02:12.559+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists matches 
+       add constraint FKikobaavr29g3beeln59na42rp 
+       foreign key (season_id) 
+       references league_seasons
+2026-04-25T13:02:12.560+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists players 
+       add constraint FK5nglidr00c4dyybl171v6kask 
+       foreign key (team_id) 
+       references teams
+2026-04-25T13:02:12.561+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists prediction_points 
+       add constraint FKiptse7l72fwiycffbxgxouyd5 
+       foreign key (league_prediction_id) 
+       references league_predictions
+2026-04-25T13:02:12.562+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists prediction_points 
+       add constraint FKnafximwydqg8b6moxpoc081lm 
+       foreign key (match_id) 
+       references matches
+2026-04-25T13:02:12.564+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists prediction_points 
+       add constraint FKmu19u4cl3svavibjd4v15ppib 
+       foreign key (match_prediction_id) 
+       references match_predictions
+2026-04-25T13:02:12.566+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists prediction_points 
+       add constraint FK9xskkgla574uqifuyg6jqx932 
+       foreign key (season_id) 
+       references league_seasons
+2026-04-25T13:02:12.568+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists prediction_points 
+       add constraint FK4n99y1hqpyx6bjx668824w1cg 
+       foreign key (user_id) 
+       references users
+2026-04-25T13:02:12.570+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists season_teams 
+       add constraint FK1dxfkn0jf196ignroemue1ykw 
+       foreign key (season_id) 
+       references league_seasons
+2026-04-25T13:02:12.572+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists season_teams 
+       add constraint FKbvl0b16veuxrwfefe67pmxi6o 
+       foreign key (team_id) 
+       references teams
+2026-04-25T13:02:12.573+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists user_roles 
+       add constraint FKh8ciramu9cc9q3qcqiv4ue8a6 
+       foreign key (role_id) 
+       references roles
+2026-04-25T13:02:12.574+05:30 DEBUG 8079 --- [family-league] [main] org.hibernate.SQL                        : 
+    alter table if exists user_roles 
+       add constraint FKhfh9dx7w3ubf1co1vdev94g3f 
+       foreign key (user_id) 
+       references users
+2026-04-25T13:02:12.576+05:30  INFO 8079 --- [family-league] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T13:02:12.630+05:30  INFO 8079 --- [family-league] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T13:02:13.672+05:30  WARN 8079 --- [family-league] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-25T13:02:13.737+05:30  INFO 8079 --- [family-league] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-04-25T13:02:14.120+05:30  INFO 8079 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
+2026-04-25T13:02:14.125+05:30  INFO 8079 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.722 seconds (process running for 3.885)
+2026-04-25T13:04:43.758+05:30  INFO 8079 --- [family-league] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T13:04:43.759+05:30  INFO 8079 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T13:04:43.760+05:30  INFO 8079 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-25T13:04:44.281+05:30  INFO 8079 --- [family-league] [http-nio-9090-exec-1] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 488 ms
+2026-04-25T13:32:32.267+05:30  WARN 8079 --- [family-league] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=19m50s326ms).
+2026-04-25T13:50:25.175+05:30  WARN 8079 --- [family-league] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m52s909ms).
+2026-04-25T14:02:46.920+05:30  WARN 8079 --- [family-league] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m21s744ms).
+2026-04-25T14:03:59.208+05:30  INFO 8079 --- [family-league] [http-nio-9090-exec-10] c.d.j.controller.AuthController          : Registration request for username=admin
+2026-04-25T14:03:59.264+05:30 DEBUG 8079 --- [family-league] [http-nio-9090-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T14:03:59.274+05:30 DEBUG 8079 --- [family-league] [http-nio-9090-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T14:03:59.383+05:30  INFO 8079 --- [family-league] [http-nio-9090-exec-10] c.d.j.service.impl.AuthServiceImpl       : Registered new user id=1b9e55bd-427d-4769-880f-dc5a6fc77d95 username=admin
+2026-04-25T14:03:59.427+05:30 DEBUG 8079 --- [family-league] [http-nio-9090-exec-10] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (avatar_url, created_at, created_by, deleted_at, email, full_name, is_active, password_hash, updated_at, updated_by, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-04-25T14:14:02.660+05:30 DEBUG 8079 --- [family-league] [http-nio-9090-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:14:02.674+05:30 DEBUG 8079 --- [family-league] [http-nio-9090-exec-2] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:14:02.693+05:30 ERROR 8079 --- [family-league] [http-nio-9090-exec-2] c.d.j.exception.GlobalExceptionHandler   : Unexpected error
+
+org.springframework.dao.InvalidDataAccessApiUsageException: Sort expression '["string"]: ASC' must only contain property references or aliases used in the select clause; If you really want to use something other than that for sorting, please use JpaSort.unsafe(…)
+	at org.springframework.data.jpa.repository.query.QueryUtils.checkSortExpression(QueryUtils.java:802) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.JpaQueryCreator.buildQuery(JpaQueryCreator.java:242) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.JpaQueryCreator.createQuery(JpaQueryCreator.java:214) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.JpaQueryCreator.complete(JpaQueryCreator.java:208) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.JpaQueryCreator.complete(JpaQueryCreator.java:1) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.repository.query.parser.AbstractQueryCreator.createQuery(AbstractQueryCreator.java:96) ~[spring-data-commons-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.JpaQueryCreator.createQuery(JpaQueryCreator.java:1) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery$QueryPreparer$CacheableJpqlQueryCreator.<init>(PartTreeJpaQuery.java:335) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery$QueryPreparer.createCreator(PartTreeJpaQuery.java:315) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery$QueryPreparer.createQuery(PartTreeJpaQuery.java:230) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.doCreateQuery(PartTreeJpaQuery.java:125) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.createQuery(AbstractJpaQuery.java:264) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution$PagedExecution.doExecute(JpaQueryExecution.java:285) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution.execute(JpaQueryExecution.java:99) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:164) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:154) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169) ~[spring-data-commons-4.0.5.jar:4.0.5]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158) ~[spring-data-commons-4.0.5.jar:4.0.5]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:167) ~[spring-data-commons-4.0.5.jar:4.0.5]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146) ~[spring-data-commons-4.0.5.jar:4.0.5]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69) ~[spring-data-commons-4.0.5.jar:4.0.5]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.7.jar:7.0.7]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.7.jar:7.0.7]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135) ~[spring-tx-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:137) ~[spring-data-jpa-4.0.5.jar:4.0.5]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222) ~[spring-aop-7.0.7.jar:7.0.7]
+	at jdk.proxy2/jdk.proxy2.$Proxy155.findByDeletedAtIsNull(Unknown Source) ~[na:na]
+	at com.divami.java_project.service.impl.UserServiceImpl.findAll(UserServiceImpl.java:32) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.7.jar:7.0.7]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.7.jar:7.0.7]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.7.jar:7.0.7]
+	at com.divami.java_project.service.impl.UserServiceImpl$$SpringCGLIB$$0.findAll(<generated>) ~[classes/:na]
+	at com.divami.java_project.controller.UserController.findAll(UserController.java:45) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:376) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at com.divami.java_project.security.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:50) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195) ~[spring-security-web-7.0.5.jar:7.0.5]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317) ~[spring-security-config-7.0.5.jar:7.0.5]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-04-25T14:16:50.966+05:30  INFO 8079 --- [family-league] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-25T14:16:50.974+05:30  INFO 8079 --- [family-league] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-25T14:16:50.988+05:30  INFO 8079 --- [family-league] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:16:50.991+05:30  INFO 8079 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-25T14:16:50.992+05:30  INFO 8079 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-25T14:16:56.333+05:30  INFO 8826 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Starting JavaProjectApplication using Java 21.0.10 with PID 8826 (/Users/amulya/Documents/java-project/target/classes started by amulya in /Users/amulya/Documents/java-project)
+2026-04-25T14:16:56.334+05:30  INFO 8826 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-25T14:16:56.715+05:30  INFO 8826 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T14:16:56.766+05:30  INFO 8826 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 21 JPA repository interfaces.
+2026-04-25T14:16:57.051+05:30  INFO 8826 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9090 (http)
+2026-04-25T14:16:57.064+05:30  INFO 8826 --- [family-league] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T14:16:57.064+05:30  INFO 8826 --- [family-league] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-04-25T14:16:57.088+05:30  INFO 8826 --- [family-league] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 732 ms
+2026-04-25T14:16:57.164+05:30  INFO 8826 --- [family-league] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-25T14:16:57.188+05:30  INFO 8826 --- [family-league] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-04-25T14:16:57.370+05:30  INFO 8826 --- [family-league] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T14:16:57.385+05:30  INFO 8826 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T14:16:57.442+05:30  INFO 8826 --- [family-league] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7ec5aad
+2026-04-25T14:16:57.442+05:30  INFO 8826 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T14:16:57.458+05:30  WARN 8826 --- [family-league] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T14:16:57.470+05:30  INFO 8826 --- [family-league] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/family-league]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.3
+	Default catalog/schema: family-league/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-25T14:16:58.032+05:30  INFO 8826 --- [family-league] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T14:16:58.111+05:30  INFO 8826 --- [family-league] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:16:58.162+05:30  INFO 8826 --- [family-league] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T14:16:59.201+05:30  WARN 8826 --- [family-league] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-25T14:16:59.261+05:30  INFO 8826 --- [family-league] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-04-25T14:16:59.697+05:30  INFO 8826 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
+2026-04-25T14:16:59.702+05:30  INFO 8826 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.562 seconds (process running for 3.72)
+2026-04-25T14:17:04.490+05:30  INFO 8826 --- [family-league] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T14:17:04.490+05:30  INFO 8826 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T14:17:04.491+05:30  INFO 8826 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-25T14:17:04.602+05:30 DEBUG 8826 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:17:04.616+05:30 DEBUG 8826 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:17:04.637+05:30  WARN 8826 --- [family-league] [http-nio-9090-exec-1] c.d.j.exception.GlobalExceptionHandler   : Invalid query parameter: Sort expression '["string"]: ASC' must only contain property references or aliases used in the select clause; If you really want to use something other than that for sorting, please use JpaSort.unsafe(…)
+2026-04-25T14:19:22.486+05:30  INFO 8826 --- [family-league] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-25T14:19:22.496+05:30  INFO 8826 --- [family-league] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-25T14:19:22.507+05:30  INFO 8826 --- [family-league] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:19:22.509+05:30  INFO 8826 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-25T14:19:22.511+05:30  INFO 8826 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-25T14:19:26.125+05:30  INFO 9065 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Starting JavaProjectApplication using Java 21.0.10 with PID 9065 (/Users/amulya/Documents/java-project/target/classes started by amulya in /Users/amulya/Documents/java-project)
+2026-04-25T14:19:26.126+05:30  INFO 9065 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-25T14:19:26.505+05:30  INFO 9065 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T14:19:26.553+05:30  INFO 9065 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 44 ms. Found 21 JPA repository interfaces.
+2026-04-25T14:19:26.854+05:30  INFO 9065 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9090 (http)
+2026-04-25T14:19:26.869+05:30  INFO 9065 --- [family-league] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T14:19:26.869+05:30  INFO 9065 --- [family-league] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-04-25T14:19:26.890+05:30  INFO 9065 --- [family-league] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 742 ms
+2026-04-25T14:19:26.963+05:30  INFO 9065 --- [family-league] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-25T14:19:26.987+05:30  INFO 9065 --- [family-league] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-04-25T14:19:27.167+05:30  INFO 9065 --- [family-league] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T14:19:27.181+05:30  INFO 9065 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T14:19:27.233+05:30  INFO 9065 --- [family-league] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@441aa7ae
+2026-04-25T14:19:27.234+05:30  INFO 9065 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T14:19:27.250+05:30  WARN 9065 --- [family-league] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T14:19:27.263+05:30  INFO 9065 --- [family-league] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/family-league]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.3
+	Default catalog/schema: family-league/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-25T14:19:27.814+05:30  INFO 9065 --- [family-league] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T14:19:27.892+05:30  INFO 9065 --- [family-league] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:19:27.943+05:30  INFO 9065 --- [family-league] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T14:19:29.045+05:30  INFO 9065 --- [family-league] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-04-25T14:19:29.502+05:30  INFO 9065 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
+2026-04-25T14:19:29.507+05:30  INFO 9065 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.576 seconds (process running for 3.729)
+2026-04-25T14:20:27.553+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T14:20:27.553+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T14:20:27.554+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-25T14:20:27.666+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:20:27.681+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:20:27.703+05:30  WARN 9065 --- [family-league] [http-nio-9090-exec-1] c.d.j.exception.GlobalExceptionHandler   : Invalid query parameter: Sort expression '[]: ASC' must only contain property references or aliases used in the select clause; If you really want to use something other than that for sorting, please use JpaSort.unsafe(…)
+2026-04-25T14:20:36.282+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:20:36.287+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-2] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:20:36.290+05:30  WARN 9065 --- [family-league] [http-nio-9090-exec-2] c.d.j.exception.GlobalExceptionHandler   : Invalid query parameter: Sort expression '[]: ASC' must only contain property references or aliases used in the select clause; If you really want to use something other than that for sorting, please use JpaSort.unsafe(…)
+2026-04-25T14:20:44.611+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-6] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 443 ms
+2026-04-25T14:23:17.812+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-10] c.d.j.controller.AuthController          : Login attempt for username=admin
+2026-04-25T14:23:17.813+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:23:17.928+05:30  WARN 9065 --- [family-league] [http-nio-9090-exec-10] c.d.j.exception.GlobalExceptionHandler   : Business rule violation: Invalid username or password
+2026-04-25T14:28:24.752+05:30  WARN 9065 --- [family-league] [http-nio-9090-exec-1] c.d.j.exception.GlobalExceptionHandler   : Validation failed: password: size must be between 8 and 2147483647
+2026-04-25T14:28:42.065+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-2] c.d.j.controller.AuthController          : Registration request for username=admin
+2026-04-25T14:28:42.077+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T14:28:42.080+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T14:28:42.210+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-2] c.d.j.service.impl.AuthServiceImpl       : Registered new user id=4927c452-61e0-4a66-a437-e1f6527f3451 username=admin
+2026-04-25T14:28:42.225+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-2] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (avatar_url, created_at, created_by, deleted_at, email, full_name, is_active, password_hash, updated_at, updated_by, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-04-25T14:29:39.634+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:29:39.639+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-3] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:29:39.645+05:30  WARN 9065 --- [family-league] [http-nio-9090-exec-3] c.d.j.exception.GlobalExceptionHandler   : Invalid query parameter: Sort expression '[]: ASC' must only contain property references or aliases used in the select clause; If you really want to use something other than that for sorting, please use JpaSort.unsafe(…)
+2026-04-25T14:30:08.378+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:30:08.383+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-4] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:30:08.387+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-4] c.d.j.controller.AuthController          : Login attempt for username=admin
+2026-04-25T14:30:08.389+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:30:08.501+05:30  INFO 9065 --- [family-league] [http-nio-9090-exec-4] c.d.j.service.impl.AuthServiceImpl       : Successful login for userId=4927c452-61e0-4a66-a437-e1f6527f3451
+2026-04-25T14:33:24.218+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:33:24.221+05:30 DEBUG 9065 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:33:24.225+05:30  WARN 9065 --- [family-league] [http-nio-9090-exec-6] c.d.j.exception.GlobalExceptionHandler   : Invalid query parameter: Sort expression '[]: ASC' must only contain property references or aliases used in the select clause; If you really want to use something other than that for sorting, please use JpaSort.unsafe(…)
+2026-04-25T14:37:58.216+05:30  INFO 9065 --- [family-league] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-25T14:37:58.224+05:30  INFO 9065 --- [family-league] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-25T14:37:58.237+05:30  INFO 9065 --- [family-league] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:37:58.242+05:30  INFO 9065 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-25T14:37:58.245+05:30  INFO 9065 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-25T14:38:02.663+05:30  INFO 9584 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Starting JavaProjectApplication using Java 21.0.10 with PID 9584 (/Users/amulya/Documents/java-project/target/classes started by amulya in /Users/amulya/Documents/java-project)
+2026-04-25T14:38:02.664+05:30  INFO 9584 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-25T14:38:03.036+05:30  INFO 9584 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T14:38:03.086+05:30  INFO 9584 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 46 ms. Found 21 JPA repository interfaces.
+2026-04-25T14:38:03.355+05:30  INFO 9584 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9090 (http)
+2026-04-25T14:38:03.365+05:30  INFO 9584 --- [family-league] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T14:38:03.365+05:30  INFO 9584 --- [family-league] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-04-25T14:38:03.389+05:30  INFO 9584 --- [family-league] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 703 ms
+2026-04-25T14:38:03.465+05:30  INFO 9584 --- [family-league] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-25T14:38:03.490+05:30  INFO 9584 --- [family-league] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-04-25T14:38:03.672+05:30  INFO 9584 --- [family-league] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T14:38:03.688+05:30  INFO 9584 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T14:38:03.742+05:30  INFO 9584 --- [family-league] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3dd66ff5
+2026-04-25T14:38:03.742+05:30  INFO 9584 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T14:38:03.760+05:30  WARN 9584 --- [family-league] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T14:38:03.773+05:30  INFO 9584 --- [family-league] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/family-league]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.3
+	Default catalog/schema: family-league/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-25T14:38:04.324+05:30  INFO 9584 --- [family-league] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T14:38:04.394+05:30  INFO 9584 --- [family-league] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:38:04.445+05:30  INFO 9584 --- [family-league] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T14:38:05.521+05:30  INFO 9584 --- [family-league] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-04-25T14:38:05.935+05:30  INFO 9584 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
+2026-04-25T14:38:05.940+05:30  INFO 9584 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.47 seconds (process running for 3.631)
+2026-04-25T14:38:26.602+05:30  INFO 9584 --- [family-league] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T14:38:26.602+05:30  INFO 9584 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T14:38:26.604+05:30  INFO 9584 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-25T14:38:27.176+05:30  INFO 9584 --- [family-league] [http-nio-9090-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 447 ms
+2026-04-25T14:38:57.511+05:30  INFO 9584 --- [family-league] [http-nio-9090-exec-5] c.d.j.controller.AuthController          : Login attempt for username=admin
+2026-04-25T14:38:57.562+05:30 DEBUG 9584 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:38:57.671+05:30  INFO 9584 --- [family-league] [http-nio-9090-exec-5] c.d.j.service.impl.AuthServiceImpl       : Successful login for userId=4927c452-61e0-4a66-a437-e1f6527f3451
+2026-04-25T14:39:44.963+05:30 DEBUG 9584 --- [family-league] [http-nio-9090-exec-7] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:39:44.966+05:30 DEBUG 9584 --- [family-league] [http-nio-9090-exec-7] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:39:44.977+05:30  WARN 9584 --- [family-league] [http-nio-9090-exec-7] c.d.j.exception.GlobalExceptionHandler   : Invalid query parameter: Sort expression '[]: ASC' must only contain property references or aliases used in the select clause; If you really want to use something other than that for sorting, please use JpaSort.unsafe(…)
+2026-04-25T14:46:00.477+05:30  INFO 9584 --- [family-league] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-25T14:46:00.486+05:30  INFO 9584 --- [family-league] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-25T14:46:00.497+05:30  INFO 9584 --- [family-league] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:46:00.499+05:30  INFO 9584 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-25T14:46:00.501+05:30  INFO 9584 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-25T14:46:03.539+05:30  INFO 10432 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Starting JavaProjectApplication using Java 21.0.10 with PID 10432 (/Users/amulya/Documents/java-project/target/classes started by amulya in /Users/amulya/Documents/java-project)
+2026-04-25T14:46:03.540+05:30  INFO 10432 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-25T14:46:03.942+05:30  INFO 10432 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T14:46:03.988+05:30  INFO 10432 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 41 ms. Found 21 JPA repository interfaces.
+2026-04-25T14:46:04.321+05:30  INFO 10432 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9090 (http)
+2026-04-25T14:46:04.330+05:30  INFO 10432 --- [family-league] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T14:46:04.331+05:30  INFO 10432 --- [family-league] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-04-25T14:46:04.353+05:30  INFO 10432 --- [family-league] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 792 ms
+2026-04-25T14:46:04.445+05:30  INFO 10432 --- [family-league] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-25T14:46:04.469+05:30  INFO 10432 --- [family-league] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-04-25T14:46:04.652+05:30  INFO 10432 --- [family-league] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T14:46:04.666+05:30  INFO 10432 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T14:46:04.717+05:30  INFO 10432 --- [family-league] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3dd66ff5
+2026-04-25T14:46:04.717+05:30  INFO 10432 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T14:46:04.733+05:30  WARN 10432 --- [family-league] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T14:46:04.744+05:30  INFO 10432 --- [family-league] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/family-league]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.3
+	Default catalog/schema: family-league/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-25T14:46:05.297+05:30  INFO 10432 --- [family-league] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T14:46:05.370+05:30  INFO 10432 --- [family-league] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T14:46:05.421+05:30  INFO 10432 --- [family-league] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T14:46:06.533+05:30  INFO 10432 --- [family-league] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-04-25T14:46:06.939+05:30  INFO 10432 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
+2026-04-25T14:46:06.944+05:30  INFO 10432 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.597 seconds (process running for 3.751)
+2026-04-25T14:46:11.749+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T14:46:11.750+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T14:46:11.751+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-25T14:46:12.289+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 409 ms
+2026-04-25T14:46:33.218+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-5] c.d.j.controller.AuthController          : Login attempt for username=admin
+2026-04-25T14:46:33.267+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:46:33.377+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-5] c.d.j.service.impl.AuthServiceImpl       : Successful login for userId=4927c452-61e0-4a66-a437-e1f6527f3451
+2026-04-25T14:47:08.897+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:47:08.900+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:47:08.909+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.deleted_at is null 
+    order by
+        u1_0.username 
+    fetch
+        first ? rows only
+2026-04-25T14:47:08.914+05:30  WARN 10432 --- [family-league] [http-nio-9090-exec-6] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-04-25T14:48:34.261+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:48:34.264+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-9] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:50:16.408+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:50:16.411+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:57:18.716+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:57:18.721+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-3] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:57:18.733+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-3] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_at,
+        r1_0.created_by,
+        r1_0.deleted_at,
+        r1_0.description,
+        r1_0.name,
+        r1_0.updated_at,
+        r1_0.updated_by 
+    from
+        roles r1_0 
+    where
+        r1_0.id=?
+2026-04-25T14:57:18.743+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-3] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_at,
+        r1_0.created_by,
+        r1_0.deleted_at,
+        r1_0.description,
+        r1_0.name,
+        r1_0.updated_at,
+        r1_0.updated_by 
+    from
+        roles r1_0 
+    where
+        r1_0.deleted_at is null
+2026-04-25T14:58:37.839+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:58:37.843+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:58:37.844+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_at,
+        r1_0.created_by,
+        r1_0.deleted_at,
+        r1_0.description,
+        r1_0.name,
+        r1_0.updated_at,
+        r1_0.updated_by 
+    from
+        roles r1_0 
+    where
+        r1_0.id=?
+2026-04-25T14:58:37.864+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-5] c.d.j.controller.AuthController          : Registration request for username=amulya
+2026-04-25T14:58:37.866+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T14:58:37.869+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T14:58:37.987+05:30  INFO 10432 --- [family-league] [http-nio-9090-exec-5] c.d.j.service.impl.AuthServiceImpl       : Registered new user id=65f14ddc-af42-486d-b101-7bceccb85a52 username=amulya
+2026-04-25T14:58:37.991+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-5] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (avatar_url, created_at, created_by, deleted_at, email, full_name, is_active, password_hash, updated_at, updated_by, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-04-25T14:59:14.720+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T14:59:14.722+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T14:59:14.726+05:30 DEBUG 10432 --- [family-league] [http-nio-9090-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.deleted_at is null 
+    order by
+        u1_0.username 
+    fetch
+        first ? rows only
+2026-04-25T14:59:59.984+05:30 DEBUG 10432 --- [family-league] [scheduling-1] org.hibernate.SQL                        : 
+    select
+        m1_0.id,
+        m1_0.away_team_id,
+        m1_0.created_at,
+        m1_0.created_by,
+        m1_0.deleted_at,
+        m1_0.home_team_id,
+        m1_0.prediction_lock_time,
+        m1_0.scheduled_at,
+        m1_0.season_id,
+        m1_0.status,
+        m1_0.updated_at,
+        m1_0.updated_by,
+        m1_0.venue 
+    from
+        matches m1_0 
+    where
+        m1_0.scheduled_at between ? and ? 
+        and m1_0.deleted_at is null 
+        and m1_0.status='SCHEDULED'
+2026-04-25T15:03:57.031+05:30  INFO 10432 --- [family-league] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-25T15:03:57.040+05:30  INFO 10432 --- [family-league] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-25T15:03:57.051+05:30  INFO 10432 --- [family-league] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T15:03:57.054+05:30  INFO 10432 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-25T15:03:57.056+05:30  INFO 10432 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-25T15:04:00.888+05:30  INFO 11085 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Starting JavaProjectApplication using Java 21.0.10 with PID 11085 (/Users/amulya/Documents/java-project/target/classes started by amulya in /Users/amulya/Documents/java-project)
+2026-04-25T15:04:00.889+05:30  INFO 11085 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-25T15:04:01.261+05:30  INFO 11085 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T15:04:01.304+05:30  INFO 11085 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 21 JPA repository interfaces.
+2026-04-25T15:04:01.579+05:30  INFO 11085 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9090 (http)
+2026-04-25T15:04:01.589+05:30  INFO 11085 --- [family-league] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T15:04:01.590+05:30  INFO 11085 --- [family-league] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-04-25T15:04:01.612+05:30  INFO 11085 --- [family-league] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 702 ms
+2026-04-25T15:04:01.690+05:30  INFO 11085 --- [family-league] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-25T15:04:01.715+05:30  INFO 11085 --- [family-league] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-04-25T15:04:01.897+05:30  INFO 11085 --- [family-league] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T15:04:01.912+05:30  INFO 11085 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T15:04:01.963+05:30  INFO 11085 --- [family-league] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3dd66ff5
+2026-04-25T15:04:01.964+05:30  INFO 11085 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T15:04:01.981+05:30  WARN 11085 --- [family-league] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T15:04:01.994+05:30  INFO 11085 --- [family-league] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/family-league]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.3
+	Default catalog/schema: family-league/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-25T15:04:02.543+05:30  INFO 11085 --- [family-league] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T15:04:02.614+05:30  INFO 11085 --- [family-league] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T15:04:02.665+05:30  INFO 11085 --- [family-league] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T15:04:03.738+05:30  INFO 11085 --- [family-league] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-04-25T15:04:04.119+05:30  INFO 11085 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
+2026-04-25T15:04:04.125+05:30  INFO 11085 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.426 seconds (process running for 3.578)
+2026-04-25T15:11:31.117+05:30  WARN 11085 --- [family-league] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m29s49ms).
