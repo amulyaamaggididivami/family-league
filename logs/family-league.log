@@ -1710,3 +1710,161 @@ org.springframework.dao.InvalidDataAccessApiUsageException: Sort expression '["s
 2026-04-25T15:04:04.119+05:30  INFO 11085 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
 2026-04-25T15:04:04.125+05:30  INFO 11085 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.426 seconds (process running for 3.578)
 2026-04-25T15:11:31.117+05:30  WARN 11085 --- [family-league] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m29s49ms).
+2026-04-25T15:23:31.723+05:30  INFO 11085 --- [family-league] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T15:23:31.723+05:30  INFO 11085 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T15:23:31.727+05:30  INFO 11085 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-04-25T15:23:31.849+05:30 DEBUG 11085 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.avatar_url,
+        u1_0.created_at,
+        u1_0.created_by,
+        u1_0.deleted_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.is_active,
+        u1_0.password_hash,
+        u1_0.updated_at,
+        u1_0.updated_by,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null
+2026-04-25T15:23:31.866+05:30 DEBUG 11085 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        ur1_0.id,
+        ur1_0.assigned_at,
+        ur1_0.assigned_by,
+        ur1_0.deleted_at,
+        ur1_0.is_active,
+        ur1_0.role_id,
+        ur1_0.user_id 
+    from
+        user_roles ur1_0 
+    where
+        ur1_0.user_id=? 
+        and ur1_0.deleted_at is null
+2026-04-25T15:23:31.941+05:30  INFO 11085 --- [family-league] [http-nio-9090-exec-1] c.d.j.controller.LeagueTypeController    : Creating league type name=Indian Premier League
+2026-04-25T15:23:31.945+05:30 DEBUG 11085 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        lt1_0.id 
+    from
+        league_types lt1_0 
+    where
+        lt1_0.name=? 
+        and lt1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T15:23:31.948+05:30 DEBUG 11085 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    select
+        lt1_0.id 
+    from
+        league_types lt1_0 
+    where
+        lt1_0.short_code=? 
+        and lt1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T15:23:31.948+05:30  INFO 11085 --- [family-league] [http-nio-9090-exec-1] c.d.j.s.impl.LeagueTypeServiceImpl       : Creating league type name=Indian Premier League
+2026-04-25T15:23:31.964+05:30 DEBUG 11085 --- [family-league] [http-nio-9090-exec-1] org.hibernate.SQL                        : 
+    insert 
+    into
+        league_types
+        (country, created_at, created_by, deleted_at, description, format, gender, governing_body, is_active, name, short_code, updated_at, updated_by, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-04-25T15:24:23.557+05:30  INFO 11085 --- [family-league] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-25T15:24:23.567+05:30  INFO 11085 --- [family-league] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-25T15:24:23.580+05:30  INFO 11085 --- [family-league] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T15:24:23.583+05:30  INFO 11085 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-25T15:24:23.584+05:30  INFO 11085 --- [family-league] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-25T15:24:26.943+05:30  INFO 12985 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Starting JavaProjectApplication using Java 21.0.10 with PID 12985 (/Users/amulya/Documents/java-project/target/classes started by amulya in /Users/amulya/Documents/java-project)
+2026-04-25T15:24:26.944+05:30  INFO 12985 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-04-25T15:24:27.315+05:30  INFO 12985 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T15:24:27.380+05:30  INFO 12985 --- [family-league] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 21 JPA repository interfaces.
+2026-04-25T15:24:27.673+05:30  INFO 12985 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9090 (http)
+2026-04-25T15:24:27.682+05:30  INFO 12985 --- [family-league] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T15:24:27.682+05:30  INFO 12985 --- [family-league] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-04-25T15:24:27.703+05:30  INFO 12985 --- [family-league] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 738 ms
+2026-04-25T15:24:27.776+05:30  INFO 12985 --- [family-league] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-25T15:24:27.799+05:30  INFO 12985 --- [family-league] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-04-25T15:24:27.977+05:30  INFO 12985 --- [family-league] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T15:24:27.991+05:30  INFO 12985 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T15:24:28.042+05:30  INFO 12985 --- [family-league] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3dd66ff5
+2026-04-25T15:24:28.043+05:30  INFO 12985 --- [family-league] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T15:24:28.062+05:30  WARN 12985 --- [family-league] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T15:24:28.078+05:30  INFO 12985 --- [family-league] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/family-league]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.3
+	Default catalog/schema: family-league/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-25T15:24:28.727+05:30  INFO 12985 --- [family-league] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T15:24:28.812+05:30  INFO 12985 --- [family-league] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T15:24:28.862+05:30  INFO 12985 --- [family-league] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T15:24:29.964+05:30  INFO 12985 --- [family-league] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-04-25T15:24:30.362+05:30  INFO 12985 --- [family-league] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9090 (http) with context path '/'
+2026-04-25T15:24:30.367+05:30  INFO 12985 --- [family-league] [main] c.d.java_project.JavaProjectApplication  : Started JavaProjectApplication in 3.611 seconds (process running for 3.762)
+2026-04-25T15:24:33.431+05:30  INFO 12985 --- [family-league] [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T15:24:33.432+05:30  INFO 12985 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T15:24:33.433+05:30  INFO 12985 --- [family-league] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-25T15:24:34.017+05:30  INFO 12985 --- [family-league] [http-nio-9090-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 429 ms
+2026-04-25T15:44:51.862+05:30  INFO 12985 --- [family-league] [http-nio-9090-exec-7] c.d.j.controller.AuthController          : Registration request for username=amulya
+2026-04-25T15:44:51.926+05:30 DEBUG 12985 --- [family-league] [http-nio-9090-exec-7] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T15:44:51.935+05:30 DEBUG 12985 --- [family-league] [http-nio-9090-exec-7] org.hibernate.SQL                        : 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+        and u1_0.deleted_at is null 
+    fetch
+        first ? rows only
+2026-04-25T15:44:52.042+05:30  INFO 12985 --- [family-league] [http-nio-9090-exec-7] c.d.j.service.impl.AuthServiceImpl       : Registered new user id=a13207c4-f7a8-4715-8560-8c123fcad6f4 username=amulya
+2026-04-25T15:44:52.050+05:30 DEBUG 12985 --- [family-league] [http-nio-9090-exec-7] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_at,
+        r1_0.created_by,
+        r1_0.deleted_at,
+        r1_0.description,
+        r1_0.name,
+        r1_0.updated_at,
+        r1_0.updated_by 
+    from
+        roles r1_0 
+    where
+        r1_0.name=? 
+        and r1_0.deleted_at is null
+2026-04-25T15:44:52.100+05:30 DEBUG 12985 --- [family-league] [http-nio-9090-exec-7] org.hibernate.SQL                        : 
+    insert 
+    into
+        users
+        (avatar_url, created_at, created_by, deleted_at, email, full_name, is_active, password_hash, updated_at, updated_by, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-04-25T15:44:52.103+05:30 DEBUG 12985 --- [family-league] [http-nio-9090-exec-7] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_roles
+        (assigned_at, assigned_by, deleted_at, is_active, role_id, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
